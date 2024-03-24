@@ -1,0 +1,23 @@
+{
+    "2024-03-12": {
+        "prayers": {
+            "Fajr": {
+                "id": 1,
+                "start_time": "05:00:00",
+                "end_time": "05:10:00",
+                "units": [
+                    {
+                        "type": "fardh",
+                        "attributes": {
+                            "focus_level": "High",
+                            "sujood_tracker": [
+                                true,
+                                false
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
