@@ -146,16 +146,15 @@ class PrayerRepository extends Notifier<void>
       ),
     ];
 
-    // Encode prayers to JSON string
     final jsonData = await file.readAsString();
     final content = jsonDecode(jsonData) as Map<String, dynamic>;
 
     if (!content.containsKey(date)) {
       content[date] = {};
-      content[date]["prayers"] = {};
+      content[date]["prayers"] = [];
 
       for (Prayer prayer in prayers) {
-        content[date]["prayers"].addAll(prayer.toJson());
+        content[date]["prayers"].add(prayer.toJson());
       }
 
       // Write JSON data to the file
@@ -184,8 +183,11 @@ class PrayerRepository extends Notifier<void>
     List<Prayer> prayers = [];
 
     // Extract prayer object for the date
-    final prayersMap = content[date]["prayers"] as Map<String, dynamic>;
-    prayers.add(Prayer.fromJson(prayersMap));
+    final prayersMap = content[date]["prayers"] as List;
+
+    for (var prayerMap in prayersMap) {
+      prayers.add(Prayer.fromJson(prayerMap));
+    }
 
     return prayers; // Return the prayers list
   }

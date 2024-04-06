@@ -25,26 +25,27 @@ class Unit {
 
   // toJson method for serializing the Unit object to JSON format
   Map<String, dynamic> toJson() => {
-        'type': "",
+        'type': unitTypeAsString(type),
         'focus_level': focusLevel != null
             ? focusLevel!.name.toLowerCase()
             : null, // convert enum to lowercase string
         'is_qada': isQada,
         'order': order,
+        'rakaat_count': rakaatCount,
         'has_prayed': hasPrayed,
       };
 
   // fromJson method for creating a Unit object from a JSON map
   factory Unit.fromJson(Map<String, dynamic> json) {
     return Unit(
-      type: json['type'] as UnitType,
+      type: stringAsUnitType(json['type']) as UnitType,
       rakaatCount: json['rakaat_count'] as int,
       focusLevel: json['focus_level'] != null
           ? FocusLevel.values.firstWhere((element) =>
               element.name.toLowerCase() == json['focus_level'] as String)
           : null,
       isQada: json['is_qada'] as bool?,
-      order: json['order'] as int,
+      order: json['order'] as int?,
       hasPrayed: json['has_prayed'] as bool?,
     );
   }
@@ -88,3 +89,21 @@ Map unitXps = {
   UnitType.nafl: XP.nafl,
   UnitType.witr: XP.witr,
 };
+
+String unitTypeAsString(UnitType type) {
+  return 'fardh,sunnah,nafl,witr'.split(',')[[
+    UnitType.fardh,
+    UnitType.sunnah,
+    UnitType.nafl,
+    UnitType.witr
+  ].indexOf(type)];
+}
+
+UnitType stringAsUnitType(String type) {
+  return [
+    UnitType.fardh,
+    UnitType.sunnah,
+    UnitType.nafl,
+    UnitType.witr
+  ]['fardh,sunnah,nafl,witr'.split(',').indexOf(type)];
+}

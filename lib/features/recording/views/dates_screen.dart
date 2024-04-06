@@ -58,7 +58,7 @@ class DatesScreen extends ConsumerWidget {
                     itemCount: monthsWithDates.length,
                     itemBuilder: (context, monthIndex) {
                       final month = monthsWithDates.keys.elementAt(monthIndex);
-                      final datesList = monthsWithDates[month]!;
+                      final datesList = monthsWithDates[month]!..sort();
 
                       // Display month name
                       return Column(
@@ -157,7 +157,8 @@ class DatesScreen extends ConsumerWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const PrayerRecordingScreen(),
+        builder: (context) => PrayerRecordingScreen(
+            date: DateTime(year, month, day).toString().substring(0, 10)),
       ),
     );
   }
