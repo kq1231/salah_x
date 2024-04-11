@@ -51,8 +51,23 @@ class UnitTile extends StatelessWidget {
               value: unit.hasPrayed ?? false,
               onChanged: onChanged,
               title: Text(unitTypeAsString(unit.type)),
-              shape: const BeveledRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              shape: BeveledRectangleBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(5)),
+                side: BorderSide(
+                  width: 1,
+                  color: [
+                    Colors.orange,
+                    Colors.yellow,
+                    Colors.pinkAccent,
+                    Colors.red,
+                  ][[
+                    UnitType.fardh,
+                    UnitType.sunnah,
+                    UnitType.nafl,
+                    UnitType.witr
+                  ].indexOf(unit.type)],
+                ),
+              ),
               tileColor: Colors.grey[900]
               // checkboxShape: const BeveledRectangleBorder(
               //     borderRadius: BorderRadius.all(Radius.circular(5))),

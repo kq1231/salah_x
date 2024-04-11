@@ -30,26 +30,22 @@ class DatesScreen extends ConsumerWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    color: Theme.of(context).colorScheme.primary,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 4.0,
-                          ),
-                          child: Text(
-                            '$year',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColorDark,
-                            ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 4.0,
+                        ),
+                        child: Text(
+                          '$year',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   ListView.builder(
                     shrinkWrap: true, // Prevent nested list from overflowing
@@ -63,23 +59,19 @@ class DatesScreen extends ConsumerWidget {
                       // Display month name
                       return Column(
                         children: [
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 10),
                           Row(
                             children: [
                               const Expanded(
                                 child: Divider(),
                               ),
-                              Container(
-                                color: Theme.of(context).colorScheme.primary,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(3.0),
-                                  child: Text(
-                                    getMonthName(month),
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Theme.of(context).primaryColorDark,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                              Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: Text(
+                                  getMonthName(month),
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
@@ -91,8 +83,8 @@ class DatesScreen extends ConsumerWidget {
                           const SizedBox(height: 30),
                           Wrap(
                             // Use Wrap to display dates horizontally
-                            spacing: 2.0, // Add spacing between dates
-                            runSpacing: 2.0,
+                            spacing: 10.0, // Add spacing between dates
+                            runSpacing: 10.0,
                             children: datesList
                                 .map((day) =>
                                     _buildDateButton(context, year, month, day))
@@ -129,25 +121,21 @@ class DatesScreen extends ConsumerWidget {
 
   Widget _buildDateButton(BuildContext context, int year, int month, int day) {
     return SizedBox(
-      width: 70,
-      height: 70,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).colorScheme.primary,
+      child: OutlinedButton(
+        style: FilledButton.styleFrom(
           shape: BeveledRectangleBorder(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10),
-              ),
-              side: BorderSide(
-                  width: 2,
-                  color: Theme.of(context).colorScheme.inversePrimary)),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10),
+            ),
+            side: BorderSide(
+                width: 1, color: Theme.of(context).colorScheme.inversePrimary),
+          ),
         ),
         onPressed: () => _navigateToPrayerRecording(context, year, month, day),
         child: Text(
           '$day',
           style: const TextStyle(
-            fontSize: 20,
-            color: Colors.black,
+            fontSize: 30,
             fontWeight: FontWeight.bold,
           ),
         ),

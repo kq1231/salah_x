@@ -24,43 +24,38 @@ class PrayerSection extends StatelessWidget {
       ));
     }
 
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const Expanded(
-                flex: 5,
-                child: Divider(),
-              ),
-              Container(
-                color: Theme.of(context).colorScheme.primary,
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Text(
-                    name,
-                    style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColorDark),
-                  ),
+    return Column(
+      children: [
+        Row(
+          children: [
+            const Expanded(
+              flex: 5,
+              child: Divider(),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: Text(
+                name,
+                style: const TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              const Expanded(
-                flex: 5,
-                child: Divider(),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8.0), // Add some spacing
-          Wrap(
-            spacing: 8.0, // spacing between units
-            runSpacing: 8.0, // spacing between rows
-            children: unitTiles,
-          ),
-        ],
-      ),
+            ),
+            const Expanded(
+              flex: 5,
+              child: Divider(),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 25.0), // Add some spacing
+        Wrap(
+          spacing: 8.0, // spacing between units
+          runSpacing: 8.0, // spacing between rows
+          children: unitTiles,
+        ),
+      ],
     );
   }
 }

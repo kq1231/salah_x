@@ -7,7 +7,5 @@ final startupProvider = FutureProvider<void>((ref) async {
     ref.invalidate(databaseFileProvider);
   });
 
-  await Future.delayed(const Duration(seconds: 2));
-
   await ref.read(databaseFileProvider.future);
 });
