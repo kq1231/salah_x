@@ -193,14 +193,14 @@ class PrayerRepository extends Notifier<void>
   }
 
   @override
-  Future<void> updatePrayer(String date, Prayer prayer) async {
+  Future<void> updatePrayer(String date, Prayer prayer, int prayerIndex) async {
     File file = ref.read(databaseFileProvider).requireValue;
     // Read the file and get the data
     final jsonData = await file.readAsString();
     final content = jsonDecode(jsonData) as Map<String, dynamic>;
 
     // Replace the old Prayer with the new one
-    content[date]["prayers"][prayer.name] = prayer.toJson();
+    content[date]["prayers"][prayerIndex] = prayer.toJson();
 
     // Save the data
     file.writeAsString(jsonEncode(content));

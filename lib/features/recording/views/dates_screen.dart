@@ -63,7 +63,7 @@ class DatesScreen extends ConsumerWidget {
                       // Display month name
                       return Column(
                         children: [
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 30),
                           Row(
                             children: [
                               const Expanded(
@@ -88,7 +88,7 @@ class DatesScreen extends ConsumerWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 30),
                           Wrap(
                             // Use Wrap to display dates horizontally
                             spacing: 2.0, // Add spacing between dates
@@ -133,17 +133,23 @@ class DatesScreen extends ConsumerWidget {
       height: 70,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Theme.of(context).primaryColorDark,
-          shape: const BeveledRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          shape: BeveledRectangleBorder(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+              side: BorderSide(
+                  width: 2,
+                  color: Theme.of(context).colorScheme.inversePrimary)),
         ),
         onPressed: () => _navigateToPrayerRecording(context, year, month, day),
         child: Text(
           '$day',
-          style: const TextStyle(fontSize: 14),
+          style: const TextStyle(
+            fontSize: 20,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

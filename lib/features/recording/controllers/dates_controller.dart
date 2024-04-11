@@ -18,6 +18,11 @@ class DatesNotifier extends AsyncNotifier<Map<int, Map<int, List<int>>>> {
     ref.invalidateSelf();
     return status;
   }
+
+  Future<void> deletePrayers(String date) async {
+    await ref.read(prayerRepositoryProvider.notifier).deletePrayers(date);
+    ref.invalidateSelf();
+  }
 }
 
 final datesProvider =
