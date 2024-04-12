@@ -166,7 +166,7 @@ class PrayerRepository extends Notifier<void>
             rakaatCount: 4,
           ),
           Unit(
-            type: UnitType.nafl,
+            type: UnitType.sunnah,
             rakaatCount: 2,
           ),
         ],
