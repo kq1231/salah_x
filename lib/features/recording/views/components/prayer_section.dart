@@ -26,35 +26,43 @@ class PrayerSection extends StatelessWidget {
 
     return Column(
       children: [
-        Row(
-          children: [
-            const Expanded(
-              flex: 5,
-              child: Divider(),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(3.0),
-              child: Text(
-                name,
-                style: const TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
+        Container(
+          color: Colors.black45,
+          child: Row(
+            children: [
+              const Expanded(
+                child: Divider(
+                  color: Colors.white,
                 ),
               ),
-            ),
-            const Expanded(
-              flex: 5,
-              child: Divider(),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: Text(
+                  name,
+                  style: const TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const Expanded(
+                child: Divider(
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
         ),
 
         const SizedBox(height: 25.0), // Add some spacing
+
         Wrap(
           spacing: 8.0, // spacing between units
           runSpacing: 8.0, // spacing between rows
           children: unitTiles,
         ),
+
+        const SizedBox(height: 10.0), // Add some spacing
       ],
     );
   }

@@ -52,9 +52,9 @@ class UnitTile extends StatelessWidget {
               onChanged: onChanged,
               title: Text(unitTypeAsString(unit.type)),
               shape: BeveledRectangleBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(5)),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
                 side: BorderSide(
-                  width: 1,
+                  width: 2,
                   color: [
                     Colors.orange,
                     Colors.yellow,
@@ -68,7 +68,14 @@ class UnitTile extends StatelessWidget {
                   ].indexOf(unit.type)],
                 ),
               ),
-              tileColor: Colors.grey[900]
+              tileColor: [
+                Colors.orange,
+                Colors.yellow,
+                Colors.pinkAccent,
+                Colors.red,
+              ][[UnitType.fardh, UnitType.sunnah, UnitType.nafl, UnitType.witr]
+                      .indexOf(unit.type)]
+                  .withOpacity(0.3)
               // checkboxShape: const BeveledRectangleBorder(
               //     borderRadius: BorderRadius.all(Radius.circular(5))),
               // fillColor: const MaterialStatePropertyAll(Colors.black),
