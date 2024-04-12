@@ -146,6 +146,33 @@ class PrayerRepository extends Notifier<void>
       ),
     ];
 
+    // If it is Jumu'ah today, replace 'dhuhr' with 'jumuah'
+    if (DateTime.parse(date).weekday == 5) {
+      prayers[1] = Prayer(
+        name: 'Jumuah',
+        units: [
+          Unit(
+            type: UnitType.sunnah,
+            focusLevel: FocusLevel.high,
+            rakaatCount: 4,
+          ),
+          Unit(
+            type: UnitType.fardh,
+            focusLevel: FocusLevel.high,
+            rakaatCount: 2,
+          ),
+          Unit(
+            type: UnitType.sunnah,
+            rakaatCount: 4,
+          ),
+          Unit(
+            type: UnitType.nafl,
+            rakaatCount: 2,
+          ),
+        ],
+      );
+    }
+
     final jsonData = await file.readAsString();
     final content = jsonDecode(jsonData) as Map<String, dynamic>;
 
