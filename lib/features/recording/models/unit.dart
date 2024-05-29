@@ -4,18 +4,15 @@ class Unit {
   final UnitType
       type; // Unit UnitType (e.g., "Fardh", "Sunnah", "Witr", "Nafl")
   final int rakaatCount; // The number of rak'aat
-  final FocusLevel?
+  final FocusLevel
       focusLevel; // Enum representing focus levels (e.g., "High", "Moderate", "Low")
   final bool? hasPrayed;
-  final bool?
-      isQada; // Nullable boolean flag indicating if the unit is Qada (only applicable for specific units)
   final int? order; // Order in which the unit was offered within the prayer
   late final int xp; // Number of points
 
   Unit({
     required this.type,
-    this.focusLevel,
-    this.isQada,
+    required this.focusLevel,
     this.hasPrayed,
     this.order,
     required this.rakaatCount,
@@ -26,10 +23,8 @@ class Unit {
   // toJson method for serializing the Unit object to JSON format
   Map<String, dynamic> toJson() => {
         'type': unitTypeAsString(type),
-        'focus_level': focusLevel != null
-            ? focusLevel!.name.toLowerCase()
-            : null, // convert enum to lowercase string
-        'is_qada': isQada,
+        'focus_level':
+            focusLevel.name.toLowerCase(), // convert enum to lowercase string
         'order': order,
         'rakaat_count': rakaatCount,
         'has_prayed': hasPrayed,
@@ -38,13 +33,10 @@ class Unit {
   // fromJson method for creating a Unit object from a JSON map
   factory Unit.fromJson(Map<String, dynamic> json) {
     return Unit(
-      type: stringAsUnitType(json['type']) as UnitType,
+      type: stringAsUnitType(json['type']),
       rakaatCount: json['rakaat_count'] as int,
-      focusLevel: json['focus_level'] != null
-          ? FocusLevel.values.firstWhere((element) =>
-              element.name.toLowerCase() == json['focus_level'] as String)
-          : null,
-      isQada: json['is_qada'] as bool?,
+      focusLevel: FocusLevel.values.firstWhere((element) =>
+          element.name.toLowerCase() == json['focus_level'] as String),
       order: json['order'] as int?,
       hasPrayed: json['has_prayed'] as bool?,
     );
@@ -56,7 +48,6 @@ class Unit {
     int? rakaatCount,
     FocusLevel? focusLevel,
     bool? hasPrayed,
-    bool? isQada,
     int? order,
   }) {
     return Unit(
@@ -64,16 +55,15 @@ class Unit {
       rakaatCount: rakaatCount ?? this.rakaatCount,
       focusLevel: focusLevel ?? this.focusLevel,
       hasPrayed: hasPrayed ?? this.hasPrayed,
-      isQada: isQada ?? this.isQada,
       order: order ?? this.order,
     );
   }
 }
 
 enum FocusLevel {
-  high,
-  moderate,
   low,
+  moderate,
+  high,
 }
 
 enum UnitType {

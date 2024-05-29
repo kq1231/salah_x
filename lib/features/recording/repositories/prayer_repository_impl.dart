@@ -85,10 +85,12 @@ class PrayerRepository extends Notifier<void>
           ),
           Unit(
             type: UnitType.sunnah,
+            focusLevel: FocusLevel.high,
             rakaatCount: 2,
           ),
           Unit(
             type: UnitType.nafl,
+            focusLevel: FocusLevel.high,
             rakaatCount: 2,
           ),
         ],
@@ -98,10 +100,12 @@ class PrayerRepository extends Notifier<void>
         units: [
           Unit(
             type: UnitType.sunnah,
+            focusLevel: FocusLevel.high,
             rakaatCount: 4,
           ),
           Unit(
             type: UnitType.fardh,
+            focusLevel: FocusLevel.high,
             rakaatCount: 4,
           ),
         ],
@@ -111,14 +115,17 @@ class PrayerRepository extends Notifier<void>
         units: [
           Unit(
             type: UnitType.fardh,
+            focusLevel: FocusLevel.high,
             rakaatCount: 3,
           ),
           Unit(
+            focusLevel: FocusLevel.high,
             type: UnitType.sunnah,
             rakaatCount: 2,
           ),
           Unit(
             type: UnitType.nafl,
+            focusLevel: FocusLevel.high,
             rakaatCount: 2,
           ),
         ],
@@ -127,18 +134,22 @@ class PrayerRepository extends Notifier<void>
         name: "Isha",
         units: [
           Unit(
+            focusLevel: FocusLevel.high,
             type: UnitType.sunnah,
             rakaatCount: 4,
           ),
           Unit(
+            focusLevel: FocusLevel.high,
             type: UnitType.fardh,
             rakaatCount: 4,
           ),
           Unit(
+            focusLevel: FocusLevel.high,
             type: UnitType.sunnah,
             rakaatCount: 2,
           ),
           Unit(
+            focusLevel: FocusLevel.high,
             type: UnitType.witr,
             rakaatCount: 3,
           ),
@@ -162,10 +173,12 @@ class PrayerRepository extends Notifier<void>
             rakaatCount: 2,
           ),
           Unit(
+            focusLevel: FocusLevel.high,
             type: UnitType.sunnah,
             rakaatCount: 4,
           ),
           Unit(
+            focusLevel: FocusLevel.high,
             type: UnitType.sunnah,
             rakaatCount: 2,
           ),

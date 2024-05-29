@@ -7,6 +7,7 @@ class Prayer {
   final List<Unit> units;
   final bool? freshWudhu;
   final bool? withCongregation;
+  final bool? isQadha;
   final String? reasonForMissingPrayer;
   final String? reasonForMissingCongregation;
   final bool? wasLateForCongregation;
@@ -19,6 +20,7 @@ class Prayer {
     required this.name,
     required this.units,
     this.freshWudhu,
+    this.isQadha,
     this.withCongregation,
     this.reasonForMissingPrayer,
     this.reasonForMissingCongregation,
@@ -35,6 +37,7 @@ class Prayer {
         'units': units.map((unit) => unit.toJson()).toList(),
         'fresh_wudhu': freshWudhu,
         'with_congregation': withCongregation,
+        'is_qadha': isQadha,
         'reason_for_missing_prayer': reasonForMissingPrayer,
         'reason_for_missing_congregation': reasonForMissingCongregation,
         'was_late_for_congregation': wasLateForCongregation,
@@ -51,6 +54,7 @@ class Prayer {
       units: (json['units'] as List)
           .map((unitJson) => Unit.fromJson(unitJson))
           .toList(),
+      isQadha: json['is_qadha'],
       freshWudhu: json['fresh_wudhu'] as bool?,
       withCongregation: json['with_congregation'] as bool?,
       reasonForMissingPrayer: json['reason_for_missing_prayer'] as String?,

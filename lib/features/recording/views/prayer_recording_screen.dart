@@ -40,13 +40,11 @@ class _PrayerRecordingScreenState extends ConsumerState<PrayerRecordingScreen> {
             separatorBuilder: (context, index) => const SizedBox(height: 20),
             itemBuilder: (context, index) {
               return PrayerSection(
-                name: prayers[index].name,
+                prayer: prayers[index],
                 units: prayers[index].units,
-                onChanged: (unitIndex, value) {
+                onUnitChanged: (unitIndex, unit) {
                   // Change the status
-                  prayers[index].units[unitIndex] = prayers[index]
-                      .units[unitIndex]
-                      .copyWith(hasPrayed: value);
+                  prayers[index].units[unitIndex] = unit;
 
                   // Trigger a rebuild
                   setState(() {});
