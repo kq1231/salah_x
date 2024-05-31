@@ -102,14 +102,17 @@ class DatesScreen extends ConsumerWidget {
                             ],
                           ),
                           const SizedBox(height: 10),
-                          Wrap(
-                            // Use Wrap to display dates horizontally
-                            spacing: 10.0, // Add spacing between dates
-                            runSpacing: 10.0,
-                            children: datesList
-                                .map((day) =>
-                                    _buildDateButton(context, year, month, day))
-                                .toList(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Wrap(
+                              // Use Wrap to display dates horizontally
+                              spacing: 10.0, // Add spacing between dates
+                              runSpacing: 10.0,
+                              children: datesList
+                                  .map((day) => _buildDateButton(
+                                      context, year, month, day))
+                                  .toList(),
+                            ),
                           ),
                         ],
                       );
@@ -205,14 +208,10 @@ class DatesScreen extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            backgroundColor: Theme.of(context).colorScheme.primary,
             content: Text(
               status == true
                   ? "Prayers Created"
                   : "Prayers for ${selection.toString().substring(0, 10)} already exist!",
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.inverseSurface,
-              ),
             ),
           ),
         );

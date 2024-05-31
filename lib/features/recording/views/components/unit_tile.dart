@@ -15,57 +15,77 @@ class UnitTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 1),
-      child: ExpansionTile(
-        collapsedShape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        backgroundColor: Colors.indigo,
-        collapsedBackgroundColor: Colors.indigo,
-        title: Text(unit.type.toString().split('.').last),
-        leading: CircleAvatar(
-          radius: 12,
-          child: Text(
-            unit.rakaatCount.toString(),
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-          ),
-        ),
+      child: Row(
         children: [
-          Row(
-            children: [
-              const SizedBox(
-                width: 5,
-              ),
-              const CircleAvatar(
-                child: Icon(
-                  Icons.center_focus_strong,
-                  color: Colors.amber,
+          Transform.scale(
+            scale: 1.2,
+            child: Checkbox(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(99)),
+                value: unit.hasPrayed ?? false,
+                onChanged: (hasPrayed) {
+                  onChanged(unit.copyWith(hasPrayed: hasPrayed));
+                }),
+          ),
+          SizedBox(width: 10),
+          Expanded(
+            child: ExpansionTile(
+              collapsedShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              backgroundColor: Colors.indigo,
+              collapsedBackgroundColor: Colors.indigo,
+              title: Text(unit.type.toString().split('.').last),
+              leading: CircleAvatar(
+                radius: 12,
+                child: Text(
+                  unit.rakaatCount.toString(),
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.bold),
                 ),
               ),
-              const SizedBox(
-                width: 10,
-              ),
-              const Text("Focus Level"),
-              Expanded(
-                child: Slider(
-                    thumbColor: Colors.amber,
-                    activeColor: Colors.white,
-                    min: 0,
-                    max: 2,
-                    divisions: 2,
-                    label: [
-                      "Not Focused",
-                      "Some Focus",
-                      "Fully Focused"
-                    ][FocusLevel.values.indexOf(unit.focusLevel)],
-                    value:
-                        FocusLevel.values.indexOf(unit.focusLevel).toDouble(),
-                    onChanged: (value) {
-                      onChanged(unit.copyWith(
-                          focusLevel: FocusLevel.values[value.toInt()]));
-                    }),
-              ),
-            ],
-          )
+              children: [
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    const CircleAvatar(
+                      child: Icon(
+                        Icons.center_focus_strong,
+                        color: Colors.amber,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Text("Focus Level"),
+                    Expanded(
+                      child: Slider(
+                          thumbColor: Colors.amber,
+                          activeColor: Colors.white,
+                          min: 0,
+                          max: 2,
+                          divisions: 2,
+                          label: [
+                            "Not Focused",
+                            "Some Focus",
+                            "Fully Focused"
+                          ][FocusLevel.values.indexOf(unit.focusLevel)],
+                          value: FocusLevel.values
+                              .indexOf(unit.focusLevel)
+                              .toDouble(),
+                          onChanged: (value) {
+                            onChanged(unit.copyWith(
+                                focusLevel: FocusLevel.values[value.toInt()]));
+                          }),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
