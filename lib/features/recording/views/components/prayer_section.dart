@@ -88,7 +88,7 @@ class PrayerSection extends StatelessWidget {
                         selected: prayer.freshWudhu ?? false,
                         onSelected: (bool freshWudhu) {
                           onPrayerChanged(
-                              prayer.copyWith(freshWudhu: freshWudhu));
+                              prayer.copyWith(freshWudhu: prayer.freshWudhu));
                         },
                       ),
                       ChoiceChip(

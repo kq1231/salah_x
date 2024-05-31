@@ -19,7 +19,7 @@ class UnitTile extends StatelessWidget {
         collapsedShape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        backgroundColor: Colors.indigoAccent[400],
+        backgroundColor: Colors.indigo,
         collapsedBackgroundColor: Colors.indigo,
         title: Text(unit.type.toString().split('.').last),
         leading: CircleAvatar(
