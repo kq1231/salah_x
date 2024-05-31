@@ -42,6 +42,17 @@ class _PrayerRecordingScreenState extends ConsumerState<PrayerRecordingScreen> {
               return PrayerSection(
                 prayer: prayers[index],
                 units: prayers[index].units,
+                onPrayerChanged: (prayer) {
+                  prayers[index] = prayer;
+
+                  // Trigger a rebuild
+                  setState(() {});
+
+                  // Update the database
+                  ref
+                      .read(prayerRepositoryProvider.notifier)
+                      .updatePrayer(widget.date, prayers[index], index);
+                },
                 onUnitChanged: (unitIndex, unit) {
                   // Change the status
                   prayers[index].units[unitIndex] = unit;

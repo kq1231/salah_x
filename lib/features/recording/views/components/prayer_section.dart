@@ -7,12 +7,15 @@ class PrayerSection extends StatelessWidget {
   final Prayer prayer;
   final List<Unit> units;
   final void Function(int unitIndex, Unit unit) onUnitChanged;
+  final void Function(Prayer prayer) onPrayerChanged;
 
-  const PrayerSection(
-      {super.key,
-      required this.prayer,
-      required this.units,
-      required this.onUnitChanged});
+  const PrayerSection({
+    super.key,
+    required this.prayer,
+    required this.units,
+    required this.onUnitChanged,
+    required this.onPrayerChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,80 +28,118 @@ class PrayerSection extends StatelessWidget {
       ));
     }
 
-    return Container(
-      color: const Color.fromARGB(106, 63, 81, 181),
-      child: Column(
-        children: [
-          // -------- Name & Choice Chips ----------
-          ExpansionTile(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-            title: Text(
-              prayer.name,
-              style: const TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Wrap(
-                  runSpacing: 4,
-                  spacing: 4,
-                  children: [
-                    ChoiceChip(
-                      backgroundColor: Colors.black38,
-                      selectedColor: Colors.green,
-                      label: Text("With Jama'ah"),
-                      selected: true,
-                      onSelected: (bool withJamaah) {},
-                    ),
-                    ChoiceChip(
-                      backgroundColor: Colors.black38,
-                      selectedColor: Colors.green,
-                      label: Text("At the Mosque"),
-                      selected: true,
-                      onSelected: (bool atMosque) {},
-                    ),
-                    ChoiceChip(
-                      backgroundColor: Colors.black38,
-                      selectedColor: Colors.green,
-                      label: Text("Fresh Wudhu"),
-                      selected: true,
-                      onSelected: (bool freshWudhu) {},
-                    ),
-                    ChoiceChip(
-                      backgroundColor: Colors.green,
-                      selectedColor: Colors.red,
-                      label: Text("Late for Jama'ah"),
-                      selected: true,
-                      onSelected: (bool lateForJamaah) {},
-                    ),
-                    ChoiceChip(
-                      backgroundColor: Colors.green,
-                      selectedColor: Colors.red,
-                      label: Text("Takbir al Ula"),
-                      selected: true,
-                      onSelected: (bool takbirAlUla) {},
-                    ),
-                    ChoiceChip(
-                      selectedColor: Colors.green,
-                      label: Text("Missed the Prayer"),
-                      selected: true,
-                      onSelected: (bool missedThePrayer) {},
-                    ),
-                  ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+          color: Color.fromARGB(106, 63, 81, 181),
+        ),
+        child: Column(
+          children: [
+            // -------- Name & Choice Chips ----------
+            ExpansionTile(
+              shape:
+                  const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+              title: Text(
+                prayer.name,
+                style: const TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 10.0), // Add some spacing
-            ],
-          ),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Wrap(
+                    runSpacing: 6,
+                    spacing: 8,
+                    children: [
+                      ChoiceChip(
+                        side: BorderSide.none,
+                        backgroundColor: Colors.red,
+                        selectedColor: Colors.green,
+                        label: const Text("With Jama'ah"),
+                        selected: prayer.withCongregation ?? false,
+                        onSelected: (bool withJamaah) {
+                          onPrayerChanged(
+                              prayer.copyWith(withCongregation: withJamaah));
+                        },
+                      ),
+                      ChoiceChip(
+                        side: BorderSide.none,
+                        backgroundColor: Colors.red,
+                        selectedColor: Colors.green,
+                        label: const Text("At the Mosque"),
+                        selected: prayer.atMosque ?? false,
+                        onSelected: (bool atMosque) {
+                          onPrayerChanged(prayer.copyWith(atMosque: atMosque));
+                        },
+                      ),
+                      ChoiceChip(
+                        side: BorderSide.none,
+                        backgroundColor: Colors.black38,
+                        selectedColor: Colors.green,
+                        label: const Text("Fresh Wudhu"),
+                        selected: prayer.freshWudhu,
+                        onSelected: (bool freshWudhu) {
+                          onPrayerChanged(
+                              prayer.copyWith(freshWudhu: freshWudhu));
+                        },
+                      ),
+                      ChoiceChip(
+                        side: BorderSide.none,
+                        checkmarkColor: Colors.black,
+                        backgroundColor: Colors.green,
+                        selectedColor: Colors.red,
+                        label: const Text("Late for Jama'ah"),
+                        selected: prayer.wasLateForCongregation ?? false,
+                        onSelected: (bool wasLateForCongregation) {
+                          onPrayerChanged(prayer.copyWith(
+                              wasLateForCongregation: wasLateForCongregation));
+                        },
+                      ),
+                      ChoiceChip(
+                        side: BorderSide.none,
+                        backgroundColor: Colors.black12,
+                        selectedColor: Colors.green,
+                        label: const Text("Takbir al Ula"),
+                        selected: prayer.takbirAlUlaAchieved ?? false,
+                        onSelected: (bool takbirAlUlaAchieved) {
+                          onPrayerChanged(prayer.copyWith(
+                              takbirAlUlaAchieved: takbirAlUlaAchieved));
+                        },
+                      ),
+                      ChoiceChip(
+                        side: BorderSide.none,
+                        checkmarkColor: Colors.black,
+                        selectedColor: Colors.red,
+                        backgroundColor: Colors.green,
+                        label: const Text("Missed the Prayer"),
+                        selected: prayer.isQadha ?? false,
+                        onSelected: (bool isQadha) {
+                          onPrayerChanged(prayer.copyWith(isQadha: isQadha));
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10.0), // Add some spacing
+              ],
+            ),
 
-          // -------- Unit Tiles ----------
-          ...unitTiles,
+            // -------- Unit Tiles ----------
+            ...unitTiles.map((e) => Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  child: e,
+                )),
 
-          const SizedBox(height: 10.0), // Add some spacing
-        ],
+            const SizedBox(height: 10.0), // Add some spacing
+          ],
+        ),
       ),
     );
   }

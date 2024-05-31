@@ -16,31 +16,54 @@ class UnitTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 1),
       child: ExpansionTile(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-        backgroundColor: Colors.blueGrey,
+        collapsedShape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        backgroundColor: Colors.indigoAccent[400],
         collapsedBackgroundColor: Colors.indigo,
         title: Text(unit.type.toString().split('.').last),
-        leading: Text(unit.rakaatCount.toString()),
+        leading: CircleAvatar(
+          radius: 12,
+          child: Text(
+            unit.rakaatCount.toString(),
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          ),
+        ),
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const Icon(Icons.center_focus_strong),
+              const SizedBox(
+                width: 5,
+              ),
+              const CircleAvatar(
+                child: Icon(
+                  Icons.center_focus_strong,
+                  color: Colors.amber,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
               const Text("Focus Level"),
-              Slider(
-                  min: 0,
-                  max: 2,
-                  divisions: 2,
-                  label: [
-                    "Not Focused",
-                    "Some Focus",
-                    "Fully Focused"
-                  ][FocusLevel.values.indexOf(unit.focusLevel)],
-                  value: FocusLevel.values.indexOf(unit.focusLevel).toDouble(),
-                  onChanged: (value) {
-                    onChanged(unit.copyWith(
-                        focusLevel: FocusLevel.values[value.toInt()]));
-                  }),
+              Expanded(
+                child: Slider(
+                    thumbColor: Colors.amber,
+                    activeColor: Colors.white,
+                    min: 0,
+                    max: 2,
+                    divisions: 2,
+                    label: [
+                      "Not Focused",
+                      "Some Focus",
+                      "Fully Focused"
+                    ][FocusLevel.values.indexOf(unit.focusLevel)],
+                    value:
+                        FocusLevel.values.indexOf(unit.focusLevel).toDouble(),
+                    onChanged: (value) {
+                      onChanged(unit.copyWith(
+                          focusLevel: FocusLevel.values[value.toInt()]));
+                    }),
+              ),
             ],
           )
         ],

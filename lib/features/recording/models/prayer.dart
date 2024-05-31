@@ -5,7 +5,8 @@ class Prayer {
   final String? id;
   final String name;
   final List<Unit> units;
-  final bool? freshWudhu;
+  final bool freshWudhu;
+  final bool? atMosque;
   final bool? withCongregation;
   final bool? isQadha;
   final String? reasonForMissingPrayer;
@@ -19,9 +20,10 @@ class Prayer {
     this.id,
     required this.name,
     required this.units,
-    this.freshWudhu,
+    required this.freshWudhu,
     this.isQadha,
     this.withCongregation,
+    this.atMosque,
     this.reasonForMissingPrayer,
     this.reasonForMissingCongregation,
     this.wasLateForCongregation,
@@ -37,6 +39,7 @@ class Prayer {
         'units': units.map((unit) => unit.toJson()).toList(),
         'fresh_wudhu': freshWudhu,
         'with_congregation': withCongregation,
+        'at_mosque': atMosque,
         'is_qadha': isQadha,
         'reason_for_missing_prayer': reasonForMissingPrayer,
         'reason_for_missing_congregation': reasonForMissingCongregation,
@@ -55,7 +58,8 @@ class Prayer {
           .map((unitJson) => Unit.fromJson(unitJson))
           .toList(),
       isQadha: json['is_qadha'],
-      freshWudhu: json['fresh_wudhu'] as bool?,
+      atMosque: json['at_mosque'],
+      freshWudhu: json['fresh_wudhu'] as bool,
       withCongregation: json['with_congregation'] as bool?,
       reasonForMissingPrayer: json['reason_for_missing_prayer'] as String?,
       reasonForMissingCongregation:
@@ -74,6 +78,8 @@ class Prayer {
     List<Unit>? units,
     bool? freshWudhu,
     bool? withCongregation,
+    bool? atMosque,
+    bool? isQadha,
     String? reasonForMissingPrayer,
     String? reasonForMissingCongregation,
     bool? wasLateForCongregation,
@@ -91,6 +97,8 @@ class Prayer {
           reasonForMissingPrayer ?? this.reasonForMissingPrayer,
       reasonForMissingCongregation:
           reasonForMissingCongregation ?? this.reasonForMissingCongregation,
+      atMosque: atMosque ?? this.atMosque,
+      isQadha: isQadha ?? this.isQadha,
       wasLateForCongregation:
           wasLateForCongregation ?? this.wasLateForCongregation,
       lateByRakats: lateByRakats ?? this.lateByRakats,

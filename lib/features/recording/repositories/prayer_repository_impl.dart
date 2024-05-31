@@ -23,7 +23,8 @@ class PrayerRepository extends Notifier<void>
     final content = jsonDecode(jsonData);
 
     // Initialize the result map
-    final dates = <int, Map<int, List<int>>>{};
+    final dates =
+        <int, Map<int, List<int>>>{}; // example: {2024: {5: [29, 31, 30]}}
 
     // Loop through each date entry
     for (var dateEntry in content.entries) {
@@ -56,6 +57,9 @@ class PrayerRepository extends Notifier<void>
     // Create default prayers with units
     final List prayers = [
       Prayer(
+        withCongregation: true,
+        atMosque: true,
+        freshWudhu: false,
         name: 'Fajr',
         units: [
           Unit(
@@ -71,6 +75,9 @@ class PrayerRepository extends Notifier<void>
         ],
       ),
       Prayer(
+        withCongregation: true,
+        atMosque: true,
+        freshWudhu: false,
         name: 'Dhuhr',
         units: [
           Unit(
@@ -96,6 +103,9 @@ class PrayerRepository extends Notifier<void>
         ],
       ),
       Prayer(
+        withCongregation: true,
+        atMosque: true,
+        freshWudhu: false,
         name: "Asr",
         units: [
           Unit(
@@ -111,6 +121,9 @@ class PrayerRepository extends Notifier<void>
         ],
       ),
       Prayer(
+        withCongregation: true,
+        atMosque: true,
+        freshWudhu: false,
         name: "Maghrib",
         units: [
           Unit(
@@ -131,6 +144,9 @@ class PrayerRepository extends Notifier<void>
         ],
       ),
       Prayer(
+        withCongregation: true,
+        atMosque: true,
+        freshWudhu: false,
         name: "Isha",
         units: [
           Unit(
@@ -160,6 +176,9 @@ class PrayerRepository extends Notifier<void>
     // If it is Jumu'ah today, replace 'dhuhr' with 'jumuah'
     if (DateTime.parse(date).weekday == 5) {
       prayers[1] = Prayer(
+        withCongregation: true,
+        atMosque: true,
+        freshWudhu: false,
         name: 'Jumuah',
         units: [
           Unit(

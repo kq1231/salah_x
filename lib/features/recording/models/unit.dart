@@ -7,14 +7,14 @@ class Unit {
   final FocusLevel
       focusLevel; // Enum representing focus levels (e.g., "High", "Moderate", "Low")
   final bool? hasPrayed;
-  final int? order; // Order in which the unit was offered within the prayer
+  // final int? order; // Order in which the unit was offered within the prayer
   late final int xp; // Number of points
 
   Unit({
     required this.type,
     required this.focusLevel,
     this.hasPrayed,
-    this.order,
+    // this.order,
     required this.rakaatCount,
   }) {
     xp = unitXps[type];
@@ -25,7 +25,7 @@ class Unit {
         'type': unitTypeAsString(type),
         'focus_level':
             focusLevel.name.toLowerCase(), // convert enum to lowercase string
-        'order': order,
+        // 'order': order,
         'rakaat_count': rakaatCount,
         'has_prayed': hasPrayed,
       };
@@ -37,7 +37,7 @@ class Unit {
       rakaatCount: json['rakaat_count'] as int,
       focusLevel: FocusLevel.values.firstWhere((element) =>
           element.name.toLowerCase() == json['focus_level'] as String),
-      order: json['order'] as int?,
+      // order: json['order'] as int?,
       hasPrayed: json['has_prayed'] as bool?,
     );
   }
@@ -55,7 +55,7 @@ class Unit {
       rakaatCount: rakaatCount ?? this.rakaatCount,
       focusLevel: focusLevel ?? this.focusLevel,
       hasPrayed: hasPrayed ?? this.hasPrayed,
-      order: order ?? this.order,
+      // order: order ?? this.order,
     );
   }
 }

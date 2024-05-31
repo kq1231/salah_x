@@ -30,22 +30,34 @@ class DatesScreen extends ConsumerWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 4.0,
-                        ),
-                        child: Text(
-                          '$year',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.indigo[200],
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(5))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(
+                                child: Text(
+                                  '$year',
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   ListView.builder(
                     shrinkWrap: true, // Prevent nested list from overflowing
@@ -59,28 +71,37 @@ class DatesScreen extends ConsumerWidget {
                       // Display month name
                       return Column(
                         children: [
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 5),
                           Row(
                             children: [
-                              const Expanded(
-                                child: Divider(),
+                              Expanded(
+                                child: Container(),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(3.0),
-                                child: Text(
-                                  getMonthName(month),
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.indigo[800],
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      getMonthName(month),
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                              const Expanded(
-                                child: Divider(),
+                              Expanded(
+                                child: Container(),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 10),
                           Wrap(
                             // Use Wrap to display dates horizontally
                             spacing: 10.0, // Add spacing between dates
@@ -108,7 +129,7 @@ class DatesScreen extends ConsumerWidget {
         error: (error, stackTrace) => Center(child: Text('Error: $error')),
       ),
       floatingActionButton: FloatingActionButton(
-        shape: const BeveledRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         onPressed: () => _createPrayers(context, ref),
@@ -121,9 +142,12 @@ class DatesScreen extends ConsumerWidget {
 
   Widget _buildDateButton(BuildContext context, int year, int month, int day) {
     return SizedBox(
-      child: OutlinedButton(
+      width: 70,
+      height: 70,
+      child: TextButton(
         style: FilledButton.styleFrom(
-          shape: BeveledRectangleBorder(
+          backgroundColor: Colors.indigo,
+          shape: RoundedRectangleBorder(
             borderRadius: const BorderRadius.all(
               Radius.circular(10),
             ),
