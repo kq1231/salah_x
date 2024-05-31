@@ -80,10 +80,12 @@ class PrayerSection extends StatelessWidget {
                       ),
                       ChoiceChip(
                         side: BorderSide.none,
-                        backgroundColor: Colors.black38,
+                        backgroundColor: prayer.freshWudhu == null
+                            ? Colors.grey
+                            : Colors.black,
                         selectedColor: Colors.green,
                         label: const Text("Fresh Wudhu"),
-                        selected: prayer.freshWudhu,
+                        selected: prayer.freshWudhu ?? false,
                         onSelected: (bool freshWudhu) {
                           onPrayerChanged(
                               prayer.copyWith(freshWudhu: freshWudhu));

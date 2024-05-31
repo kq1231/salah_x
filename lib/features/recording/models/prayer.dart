@@ -5,7 +5,7 @@ class Prayer {
   final String? id;
   final String name;
   final List<Unit> units;
-  final bool freshWudhu;
+  final bool? freshWudhu;
   final bool? atMosque;
   final bool? withCongregation;
   final bool? isQadha;
@@ -20,7 +20,7 @@ class Prayer {
     this.id,
     required this.name,
     required this.units,
-    required this.freshWudhu,
+    this.freshWudhu,
     this.isQadha,
     this.withCongregation,
     this.atMosque,
@@ -59,7 +59,7 @@ class Prayer {
           .toList(),
       isQadha: json['is_qadha'],
       atMosque: json['at_mosque'],
-      freshWudhu: json['fresh_wudhu'] as bool,
+      freshWudhu: json['fresh_wudhu'] as bool?,
       withCongregation: json['with_congregation'] as bool?,
       reasonForMissingPrayer: json['reason_for_missing_prayer'] as String?,
       reasonForMissingCongregation:
