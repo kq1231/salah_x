@@ -59,7 +59,6 @@ class PrayerRepository extends Notifier<void>
       Prayer(
         withCongregation: true,
         atMosque: true,
-        freshWudhu: false,
         name: 'Fajr',
         units: [
           Unit(
@@ -77,7 +76,6 @@ class PrayerRepository extends Notifier<void>
       Prayer(
         withCongregation: true,
         atMosque: true,
-        freshWudhu: false,
         name: 'Dhuhr',
         units: [
           Unit(
@@ -105,7 +103,6 @@ class PrayerRepository extends Notifier<void>
       Prayer(
         withCongregation: true,
         atMosque: true,
-        freshWudhu: false,
         name: "Asr",
         units: [
           Unit(
@@ -123,7 +120,6 @@ class PrayerRepository extends Notifier<void>
       Prayer(
         withCongregation: true,
         atMosque: true,
-        freshWudhu: false,
         name: "Maghrib",
         units: [
           Unit(
@@ -146,7 +142,6 @@ class PrayerRepository extends Notifier<void>
       Prayer(
         withCongregation: true,
         atMosque: true,
-        freshWudhu: false,
         name: "Isha",
         units: [
           Unit(
@@ -178,7 +173,6 @@ class PrayerRepository extends Notifier<void>
       prayers[1] = Prayer(
         withCongregation: true,
         atMosque: true,
-        freshWudhu: false,
         name: 'Jumuah',
         units: [
           Unit(
