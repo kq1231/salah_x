@@ -57,8 +57,6 @@ class PrayerRepository extends Notifier<void>
     // Create default prayers with units
     final List prayers = [
       Prayer(
-        withCongregation: true,
-        atMosque: true,
         name: 'Fajr',
         units: [
           Unit(
@@ -72,8 +70,6 @@ class PrayerRepository extends Notifier<void>
         ],
       ),
       Prayer(
-        withCongregation: true,
-        atMosque: true,
         name: 'Dhuhr',
         units: [
           Unit(
@@ -95,8 +91,6 @@ class PrayerRepository extends Notifier<void>
         ],
       ),
       Prayer(
-        withCongregation: true,
-        atMosque: true,
         name: "Asr",
         units: [
           Unit(
@@ -110,8 +104,6 @@ class PrayerRepository extends Notifier<void>
         ],
       ),
       Prayer(
-        withCongregation: true,
-        atMosque: true,
         name: "Maghrib",
         units: [
           Unit(
@@ -129,8 +121,6 @@ class PrayerRepository extends Notifier<void>
         ],
       ),
       Prayer(
-        withCongregation: true,
-        atMosque: true,
         name: "Isha",
         units: [
           Unit(
@@ -156,8 +146,6 @@ class PrayerRepository extends Notifier<void>
     // If it is Jumu'ah today, replace 'dhuhr' with 'jumuah'
     if (DateTime.parse(date).weekday == 5) {
       prayers[1] = Prayer(
-        withCongregation: true,
-        atMosque: true,
         name: 'Jumuah',
         units: [
           Unit(

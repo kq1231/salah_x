@@ -54,12 +54,15 @@ class PrayerSection extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Wrap(
+                    alignment: WrapAlignment.center,
                     runSpacing: 6,
                     spacing: 8,
                     children: [
                       ChoiceChip(
                         side: BorderSide.none,
-                        backgroundColor: Colors.red,
+                        backgroundColor: prayer.withCongregation == null
+                            ? Colors.grey
+                            : Colors.red,
                         selectedColor: Colors.green,
                         label: const Text("With Jama'ah"),
                         selected: prayer.withCongregation ?? false,
@@ -70,7 +73,8 @@ class PrayerSection extends StatelessWidget {
                       ),
                       ChoiceChip(
                         side: BorderSide.none,
-                        backgroundColor: Colors.red,
+                        backgroundColor:
+                            prayer.atMosque == null ? Colors.grey : Colors.red,
                         selectedColor: Colors.green,
                         label: const Text("At the Mosque"),
                         selected: prayer.atMosque ?? false,
@@ -94,7 +98,9 @@ class PrayerSection extends StatelessWidget {
                       ChoiceChip(
                         side: BorderSide.none,
                         checkmarkColor: Colors.black,
-                        backgroundColor: Colors.green,
+                        backgroundColor: prayer.wasLateForCongregation == null
+                            ? Colors.grey
+                            : Colors.green,
                         selectedColor: Colors.red,
                         label: const Text("Late for Jama'ah"),
                         selected: prayer.wasLateForCongregation ?? false,
@@ -105,7 +111,9 @@ class PrayerSection extends StatelessWidget {
                       ),
                       ChoiceChip(
                         side: BorderSide.none,
-                        backgroundColor: Colors.black12,
+                        backgroundColor: prayer.takbirAlUlaAchieved == null
+                            ? Colors.grey
+                            : Colors.black12,
                         selectedColor: Colors.green,
                         label: const Text("Takbir al Ula"),
                         selected: prayer.takbirAlUlaAchieved ?? false,
@@ -117,8 +125,9 @@ class PrayerSection extends StatelessWidget {
                       ChoiceChip(
                         side: BorderSide.none,
                         checkmarkColor: Colors.black,
+                        backgroundColor:
+                            prayer.isQadha == null ? Colors.grey : Colors.green,
                         selectedColor: Colors.red,
-                        backgroundColor: Colors.green,
                         label: const Text("Missed the Prayer"),
                         selected: prayer.isQadha ?? false,
                         onSelected: (bool isQadha) {
@@ -127,6 +136,22 @@ class PrayerSection extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    onPrayerChanged(
+                      prayer.nullify(
+                        withCongregation: true,
+                        atMosque: true,
+                        freshWudhu: true,
+                        wasLateForCongregation: true,
+                        takbirAlUlaAchieved: true,
+                        isQadha: true,
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.close),
+                  label: const Text("Reset"),
                 ),
                 const SizedBox(height: 10.0), // Add some spacing
               ],

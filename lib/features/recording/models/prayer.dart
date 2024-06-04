@@ -106,4 +106,38 @@ class Prayer {
       masjidName: masjidName ?? this.masjidName,
     );
   }
+
+  Prayer nullify({
+    bool? id,
+    bool? freshWudhu,
+    bool? withCongregation,
+    bool? atMosque,
+    bool? isQadha,
+    bool? reasonForMissingPrayer,
+    bool? reasonForMissingCongregation,
+    bool? wasLateForCongregation,
+    bool? takbirAlUlaAchieved,
+    bool? masjidName,
+  }) {
+    return Prayer(
+      id: id == true ? null : this.id,
+      name: name,
+      units: units,
+      lateByRakats: lateByRakats,
+      freshWudhu: freshWudhu == true ? null : this.freshWudhu,
+      withCongregation: withCongregation == true ? null : this.withCongregation,
+      reasonForMissingPrayer:
+          reasonForMissingPrayer == true ? null : this.reasonForMissingPrayer,
+      reasonForMissingCongregation: reasonForMissingCongregation == true
+          ? null
+          : this.reasonForMissingCongregation,
+      atMosque: atMosque == true ? null : this.atMosque,
+      isQadha: isQadha == true ? null : this.isQadha,
+      wasLateForCongregation:
+          wasLateForCongregation == true ? null : this.wasLateForCongregation,
+      takbirAlUlaAchieved:
+          takbirAlUlaAchieved == true ? null : this.takbirAlUlaAchieved,
+      masjidName: masjidName == true ? null : this.masjidName,
+    );
+  }
 }
