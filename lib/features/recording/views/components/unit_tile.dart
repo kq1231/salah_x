@@ -46,42 +46,58 @@ class UnitTile extends StatelessWidget {
                 ),
               ),
               children: [
-                Row(
-                  children: [
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    const CircleAvatar(
-                      child: Icon(
-                        Icons.center_focus_strong,
-                        color: Colors.amber,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 5,
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const Text("Focus Level"),
-                    Expanded(
-                      child: Slider(
-                          thumbColor: Colors.amber,
-                          activeColor: Colors.white,
-                          min: 0,
-                          max: 2,
-                          divisions: 2,
-                          label: [
-                            "Not Focused",
-                            "Some Focus",
-                            "Fully Focused"
-                          ][FocusLevel.values.indexOf(unit.focusLevel)],
-                          value: FocusLevel.values
-                              .indexOf(unit.focusLevel)
-                              .toDouble(),
-                          onChanged: (value) {
-                            onChanged(unit.copyWith(
-                                focusLevel: FocusLevel.values[value.toInt()]));
-                          }),
-                    ),
-                  ],
+                      const CircleAvatar(
+                        child: Icon(
+                          Icons.center_focus_strong,
+                          color: Colors.amber,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const Text("Focus Level"),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: unit.focusLevel == null
+                            ? TextButton.icon(
+                                onPressed: () {
+                                  onChanged(unit.copyWith(
+                                      focusLevel: FocusLevel.high));
+                                },
+                                icon: Icon(Icons.add),
+                                label: Text("Add"),
+                              )
+                            : Slider(
+                                thumbColor: Colors.amber,
+                                activeColor: Colors.white,
+                                min: 0,
+                                max: 2,
+                                divisions: 2,
+                                label: [
+                                  "Not Focused",
+                                  "Some Focus",
+                                  "Fully Focused"
+                                ][FocusLevel.values.indexOf(unit.focusLevel!)],
+                                value: FocusLevel.values
+                                    .indexOf(unit.focusLevel!)
+                                    .toDouble(),
+                                onChanged: (value) {
+                                  onChanged(unit.copyWith(
+                                      focusLevel:
+                                          FocusLevel.values[value.toInt()]));
+                                }),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),

@@ -4,7 +4,7 @@ class Unit {
   final UnitType
       type; // Unit UnitType (e.g., "Fardh", "Sunnah", "Witr", "Nafl")
   final int rakaatCount; // The number of rak'aat
-  final FocusLevel
+  final FocusLevel?
       focusLevel; // Enum representing focus levels (e.g., "High", "Moderate", "Low")
   final bool? hasPrayed;
   // final int? order; // Order in which the unit was offered within the prayer
@@ -12,7 +12,7 @@ class Unit {
 
   Unit({
     required this.type,
-    required this.focusLevel,
+    this.focusLevel,
     this.hasPrayed,
     // this.order,
     required this.rakaatCount,
@@ -23,8 +23,9 @@ class Unit {
   // toJson method for serializing the Unit object to JSON format
   Map<String, dynamic> toJson() => {
         'type': unitTypeAsString(type),
-        'focus_level':
-            focusLevel.name.toLowerCase(), // convert enum to lowercase string
+        'focus_level': focusLevel != null
+            ? focusLevel!.name.toLowerCase()
+            : null, // convert enum to lowercase string
         // 'order': order,
         'rakaat_count': rakaatCount,
         'has_prayed': hasPrayed,
@@ -35,8 +36,10 @@ class Unit {
     return Unit(
       type: stringAsUnitType(json['type']),
       rakaatCount: json['rakaat_count'] as int,
-      focusLevel: FocusLevel.values.firstWhere((element) =>
-          element.name.toLowerCase() == json['focus_level'] as String),
+      focusLevel: json['focus_level'] != null
+          ? FocusLevel.values.firstWhere((element) =>
+              element.name.toLowerCase() == json['focus_level'] as String)
+          : null,
       // order: json['order'] as int?,
       hasPrayed: json['has_prayed'] as bool?,
     );

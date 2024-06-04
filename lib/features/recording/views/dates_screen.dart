@@ -38,7 +38,7 @@ class DatesScreen extends ConsumerWidget {
                         Expanded(
                           child: Container(
                             decoration: BoxDecoration(
-                                color: Colors.indigo[200],
+                                color: Colors.indigo[800],
                                 borderRadius:
                                     const BorderRadius.all(Radius.circular(5))),
                             child: Padding(
@@ -48,7 +48,6 @@ class DatesScreen extends ConsumerWidget {
                                   '$year',
                                   style: const TextStyle(
                                     fontSize: 18,
-                                    color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
