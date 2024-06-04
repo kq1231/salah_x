@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,7 +8,9 @@ import 'package:salah_x/init/startup_widget.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await DesktopWindow.setWindowSize(const Size(300, 600));
+  if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
+    await DesktopWindow.setWindowSize(const Size(300, 600));
+  }
 
   runApp(const ProviderScope(child: MyApp()));
 }
