@@ -143,26 +143,31 @@ class DatesScreen extends ConsumerWidget {
   }
 
   Widget _buildDateButton(BuildContext context, int year, int month, int day) {
-    return SizedBox(
-      width: 70,
-      height: 70,
-      child: TextButton(
-        style: FilledButton.styleFrom(
-          backgroundColor: Colors.indigo,
-          shape: RoundedRectangleBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10),
+    return Hero(
+      tag: DateTime(year, month, day).toString().substring(0, 10),
+      child: SizedBox(
+        width: 70,
+        height: 70,
+        child: TextButton(
+          style: FilledButton.styleFrom(
+            backgroundColor: Colors.indigo,
+            shape: RoundedRectangleBorder(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+              side: BorderSide(
+                  width: 1,
+                  color: Theme.of(context).colorScheme.inversePrimary),
             ),
-            side: BorderSide(
-                width: 1, color: Theme.of(context).colorScheme.inversePrimary),
           ),
-        ),
-        onPressed: () => _navigateToPrayerRecording(context, year, month, day),
-        child: Text(
-          '$day',
-          style: const TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
+          onPressed: () =>
+              _navigateToPrayerRecording(context, year, month, day),
+          child: Text(
+            '$day',
+            style: const TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
@@ -178,7 +183,8 @@ class DatesScreen extends ConsumerWidget {
       context,
       MaterialPageRoute(
         builder: (context) => PrayerRecordingScreen(
-            date: DateTime(year, month, day).toString().substring(0, 10)),
+          date: DateTime(year, month, day).toString().substring(0, 10),
+        ),
       ),
     );
   }

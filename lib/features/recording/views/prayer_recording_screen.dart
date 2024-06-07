@@ -25,49 +25,54 @@ class _PrayerRecordingScreenState extends ConsumerState<PrayerRecordingScreen> {
 
     return providerOfPrayers.when(
       data: (prayers) {
-        return Scaffold(
-          appBar: AppBar(
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    ref.read(datesProvider.notifier).deletePrayers(widget.date);
+        return Hero(
+          tag: widget.date,
+          child: Scaffold(
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      ref
+                          .read(datesProvider.notifier)
+                          .deletePrayers(widget.date);
+                    },
+                    icon: const Icon(Icons.delete_forever))
+              ],
+            ),
+            body: ListView.separated(
+              separatorBuilder: (context, index) => const SizedBox(height: 20),
+              itemBuilder: (context, index) {
+                return PrayerSection(
+                  prayer: prayers[index],
+                  units: prayers[index].units,
+                  onPrayerChanged: (prayer) {
+                    prayers[index] = prayer;
+
+                    // Trigger a rebuild
+                    setState(() {});
+
+                    // Update the database
+                    ref
+                        .read(prayerRepositoryProvider.notifier)
+                        .updatePrayer(widget.date, prayers[index], index);
                   },
-                  icon: const Icon(Icons.delete_forever))
-            ],
-          ),
-          body: ListView.separated(
-            separatorBuilder: (context, index) => const SizedBox(height: 20),
-            itemBuilder: (context, index) {
-              return PrayerSection(
-                prayer: prayers[index],
-                units: prayers[index].units,
-                onPrayerChanged: (prayer) {
-                  prayers[index] = prayer;
+                  onUnitChanged: (unitIndex, unit) {
+                    // Change the status
+                    prayers[index].units[unitIndex] = unit;
 
-                  // Trigger a rebuild
-                  setState(() {});
+                    // Trigger a rebuild
+                    setState(() {});
 
-                  // Update the database
-                  ref
-                      .read(prayerRepositoryProvider.notifier)
-                      .updatePrayer(widget.date, prayers[index], index);
-                },
-                onUnitChanged: (unitIndex, unit) {
-                  // Change the status
-                  prayers[index].units[unitIndex] = unit;
-
-                  // Trigger a rebuild
-                  setState(() {});
-
-                  // Update the database
-                  ref
-                      .read(prayerRepositoryProvider.notifier)
-                      .updatePrayer(widget.date, prayers[index], index);
-                },
-              );
-            },
-            itemCount: prayers.length,
+                    // Update the database
+                    ref
+                        .read(prayerRepositoryProvider.notifier)
+                        .updatePrayer(widget.date, prayers[index], index);
+                  },
+                );
+              },
+              itemCount: prayers.length,
+            ),
           ),
         );
       },

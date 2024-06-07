@@ -27,7 +27,7 @@ class UnitTile extends StatelessWidget {
                   onChanged(unit.copyWith(hasPrayed: hasPrayed));
                 }),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
             child: ExpansionTile(
               collapsedShape: RoundedRectangleBorder(
@@ -66,36 +66,43 @@ class UnitTile extends StatelessWidget {
                       const SizedBox(
                         width: 5,
                       ),
-                      Expanded(
-                        child: unit.focusLevel == null
-                            ? TextButton.icon(
-                                onPressed: () {
-                                  onChanged(unit.copyWith(
-                                      focusLevel: FocusLevel.high));
-                                },
-                                icon: Icon(Icons.add),
-                                label: Text("Add"),
-                              )
-                            : Slider(
-                                thumbColor: Colors.amber,
-                                activeColor: Colors.white,
-                                min: 0,
-                                max: 2,
-                                divisions: 2,
-                                label: [
-                                  "Not Focused",
-                                  "Some Focus",
-                                  "Fully Focused"
-                                ][FocusLevel.values.indexOf(unit.focusLevel!)],
-                                value: FocusLevel.values
-                                    .indexOf(unit.focusLevel!)
-                                    .toDouble(),
-                                onChanged: (value) {
-                                  onChanged(unit.copyWith(
-                                      focusLevel:
-                                          FocusLevel.values[value.toInt()]));
-                                }),
-                      ),
+                      unit.focusLevel == null
+                          ? Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton.outlined(
+                                    onPressed: () {
+                                      onChanged(unit.copyWith(
+                                          focusLevel: FocusLevel.high));
+                                    },
+                                    icon: Icon(Icons.add),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Expanded(
+                              child: Slider(
+                                  thumbColor: Colors.amber,
+                                  activeColor: Colors.white,
+                                  min: 0,
+                                  max: 2,
+                                  divisions: 2,
+                                  label: [
+                                    "Not Focused",
+                                    "Some Focus",
+                                    "Fully Focused"
+                                  ][FocusLevel.values
+                                      .indexOf(unit.focusLevel!)],
+                                  value: FocusLevel.values
+                                      .indexOf(unit.focusLevel!)
+                                      .toDouble(),
+                                  onChanged: (value) {
+                                    onChanged(unit.copyWith(
+                                        focusLevel:
+                                            FocusLevel.values[value.toInt()]));
+                                  }),
+                            ),
                     ],
                   ),
                 )
