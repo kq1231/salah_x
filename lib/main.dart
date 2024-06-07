@@ -9,7 +9,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (Platform.isMacOS || Platform.isWindows || Platform.isLinux) {
-    await DesktopWindow.setWindowSize(const Size(300, 600));
+    await DesktopWindow.setWindowSize(const Size(350, 600));
   }
 
   runApp(const ProviderScope(child: MyApp()));
