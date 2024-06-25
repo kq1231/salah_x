@@ -13,7 +13,9 @@ class StartupScreen extends ConsumerWidget {
 
     return startupState.when(
       data: (data) {
-        return const Scaffold(body: DatesScreen());
+        return const Scaffold(
+          body: DatesScreen(),
+        );
       },
       error: (e, st) {
         return const Scaffold(body: Text("ERROR"));

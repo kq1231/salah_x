@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:salah_x/features/recording/controllers/crud_status_provider.dart';
 import 'package:salah_x/features/recording/repositories/prayer_repository_impl.dart';
 
 class DatesNotifier extends AsyncNotifier<Map<int, Map<int, List<int>>>> {
@@ -11,16 +12,23 @@ class DatesNotifier extends AsyncNotifier<Map<int, Map<int, List<int>>>> {
 
   // Methods
   Future<bool> createPrayers(DateTime date) async {
-    bool status =
-        await ref.read(prayerRepositoryProvider.notifier).createPrayers(
-              date.toString().substring(0, 10),
-            );
+    bool status = await ref
+        .read(crudStatusControllerProvider.notifier)
+        .performCRUDOperation(
+          ref.read(prayerRepositoryProvider.notifier).createPrayers,
+          arg: date.toString().substring(0, 10),
+        );
+
     ref.invalidateSelf();
     return status;
   }
 
   Future<void> deletePrayers(String date) async {
-    await ref.read(prayerRepositoryProvider.notifier).deletePrayers(date);
+    await ref.read(crudStatusControllerProvider.notifier).performCRUDOperation(
+          ref.read(prayerRepositoryProvider.notifier).deletePrayers,
+          arg: date.toString().substring(0, 10),
+        );
+
     ref.invalidateSelf();
   }
 }

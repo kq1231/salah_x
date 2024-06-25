@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
+import 'package:salah_x/features/recording/controllers/crud_status_provider.dart';
 import 'package:salah_x/features/recording/controllers/dates_controller.dart';
 import 'package:salah_x/features/recording/controllers/prayer_controller.dart';
 import 'package:salah_x/features/recording/repositories/prayer_repository_impl.dart';
@@ -29,13 +31,50 @@ class _PrayerRecordingScreenState extends ConsumerState<PrayerRecordingScreen> {
           tag: widget.date,
           child: Scaffold(
             appBar: AppBar(
+              title: Text(DateFormat(DateFormat.ABBR_MONTH_DAY)
+                  .format(DateTime.parse(widget.date))),
               actions: [
+                ref.watch(crudStatusControllerProvider) is AsyncLoading
+                    ? const Tooltip(
+                        message: "Syncing...",
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.done),
+                        tooltip: "In Sync",
+                      ),
                 IconButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
-                      ref
-                          .read(datesProvider.notifier)
-                          .deletePrayers(widget.date);
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                              title: Text(
+                                  "Are you really sure you want to delete all data for ${DateFormat(DateFormat.ABBR_MONTH_DAY).format(DateTime.parse(widget.date))}?"),
+                              actions: [
+                                IconButton(
+                                    icon: const Icon(Icons.cancel),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    }),
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+
+                                    ref
+                                        .read(datesProvider.notifier)
+                                        .deletePrayers(widget.date);
+                                  },
+                                  icon: const Icon(Icons.done),
+                                ),
+                              ]);
+                        },
+                      );
                     },
                     icon: const Icon(Icons.delete_forever))
               ],
@@ -54,8 +93,10 @@ class _PrayerRecordingScreenState extends ConsumerState<PrayerRecordingScreen> {
 
                     // Update the database
                     ref
-                        .read(prayerRepositoryProvider.notifier)
-                        .updatePrayer(widget.date, prayers[index], index);
+                        .read(crudStatusControllerProvider.notifier)
+                        .performCRUDOperation(() async => ref
+                            .read(prayerRepositoryProvider.notifier)
+                            .updatePrayer(widget.date, prayers[index], index));
                   },
                   onUnitChanged: (unitIndex, unit) {
                     // Change the status
@@ -66,8 +107,10 @@ class _PrayerRecordingScreenState extends ConsumerState<PrayerRecordingScreen> {
 
                     // Update the database
                     ref
-                        .read(prayerRepositoryProvider.notifier)
-                        .updatePrayer(widget.date, prayers[index], index);
+                        .read(crudStatusControllerProvider.notifier)
+                        .performCRUDOperation(() => ref
+                            .read(prayerRepositoryProvider.notifier)
+                            .updatePrayer(widget.date, prayers[index], index));
                   },
                 );
               },

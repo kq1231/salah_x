@@ -126,7 +126,9 @@ class PrayerSection extends StatelessWidget {
                         side: BorderSide.none,
                         checkmarkColor: Colors.black,
                         backgroundColor:
-                            prayer.isQadha == null ? Colors.grey : Colors.green,
+                            prayer.isQadha == false || prayer.isQadha == null
+                                ? Colors.grey
+                                : Colors.green,
                         selectedColor: Colors.red,
                         label: const Text("Missed the Prayer"),
                         selected: prayer.isQadha ?? false,
