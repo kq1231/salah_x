@@ -3,12 +3,12 @@
 ## Features
 
 - Local storage integration || Offline functionality ✔️
-- UI Redesign
+- UI Redesign ✔️
 - Multiple Accounts
 - Account Statistics (XP, etc.)
 - Prayer timings 
-- Focus
-- Masjid, with_jama'ah, Takbir-al-ula, fresh_wudhu, ..
+- Focus ✔️
+- Masjid, with_jama'ah, Takbir-al-ula, fresh_wudhu, .. ✔️
 - Masjid Name
 - Integration with Maps
 - Reasons for missing Salah
