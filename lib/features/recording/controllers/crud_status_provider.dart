@@ -11,7 +11,8 @@ class CRUDStatusController extends AutoDisposeAsyncNotifier<void> {
     state = const AsyncLoading();
     var res = arg != null ? func(arg) : func();
 
-    await Future.delayed(Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 300));
+
     state = const AsyncData(null);
 
     return res;

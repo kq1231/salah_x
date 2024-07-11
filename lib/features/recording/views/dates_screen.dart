@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:salah_x/features/recording/controllers/crud_status_provider.dart';
 import 'package:salah_x/features/recording/controllers/dates_controller.dart';
 import 'package:salah_x/features/recording/views/prayer_recording_screen.dart';
+import 'package:salah_x/home.dart';
 
 class DatesScreen extends ConsumerWidget {
   const DatesScreen({super.key});
@@ -15,6 +16,18 @@ class DatesScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.home_rounded),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PrayerHomePage(),
+              ),
+              (Route<dynamic> route) => false,
+            );
+          },
+        ),
         title: const Text('Date View'),
         actions: [
           ref.watch(crudStatusControllerProvider) is AsyncLoading
@@ -159,31 +172,26 @@ class DatesScreen extends ConsumerWidget {
   }
 
   Widget _buildDateButton(BuildContext context, int year, int month, int day) {
-    return Hero(
-      tag: DateTime(year, month, day).toString().substring(0, 10),
-      child: SizedBox(
-        width: 70,
-        height: 70,
-        child: TextButton(
-          style: FilledButton.styleFrom(
-            backgroundColor: Colors.indigo,
-            shape: RoundedRectangleBorder(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10),
-              ),
-              side: BorderSide(
-                  width: 1,
-                  color: Theme.of(context).colorScheme.inversePrimary),
+    return SizedBox(
+      width: 70,
+      height: 70,
+      child: TextButton(
+        style: FilledButton.styleFrom(
+          backgroundColor: Colors.indigo,
+          shape: RoundedRectangleBorder(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10),
             ),
+            side: BorderSide(
+                width: 1, color: Theme.of(context).colorScheme.inversePrimary),
           ),
-          onPressed: () =>
-              _navigateToPrayerRecording(context, year, month, day),
-          child: Text(
-            '$day',
-            style: const TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
+        ),
+        onPressed: () => _navigateToPrayerRecording(context, year, month, day),
+        child: Text(
+          '$day',
+          style: const TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -195,13 +203,14 @@ class DatesScreen extends ConsumerWidget {
     // Use go_router to navigate to PrayerRecordingScreen
     // Pass year, month, and dates as arguments
     // Replace with your actual navigation logic using go_router
-    Navigator.push(
+    Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
         builder: (context) => PrayerRecordingScreen(
           date: DateTime(year, month, day).toString().substring(0, 10),
         ),
       ),
+      (Route<dynamic> route) => false,
     );
   }
 

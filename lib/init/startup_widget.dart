@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:salah_x/features/auth/login_screen.dart';
-import 'package:salah_x/features/recording/views/dates_screen.dart';
+import 'package:salah_x/home.dart';
 import 'package:salah_x/init/startup_provider.dart';
 
 class StartupScreen extends ConsumerWidget {
@@ -14,9 +13,7 @@ class StartupScreen extends ConsumerWidget {
 
     return startupState.when(
       data: (data) {
-        return const Scaffold(
-          body: LoginScreen(),
-        );
+        return const PrayerHomePage();
       },
       error: (e, st) {
         return const Scaffold(body: Text("ERROR"));
