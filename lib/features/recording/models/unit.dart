@@ -23,9 +23,8 @@ class Unit {
   // toJson method for serializing the Unit object to JSON format
   Map<String, dynamic> toJson() => {
         'type': unitTypeAsString(type),
-        'focus_level': focusLevel != null
-            ? focusLevel!.name.toLowerCase()
-            : null, // convert enum to lowercase string
+        'focus_level':
+            focusLevel?.name.toLowerCase(), // convert enum to lowercase string
         // 'order': order,
         'rakaat_count': rakaatCount,
         'has_prayed': hasPrayed,

@@ -22,7 +22,7 @@ class DatesScreen extends ConsumerWidget {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => PrayerHomePage(),
+                builder: (context) => const PrayerHomePage(),
               ),
               (Route<dynamic> route) => false,
             );

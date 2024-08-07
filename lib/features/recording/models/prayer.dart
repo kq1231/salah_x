@@ -1,3 +1,4 @@
+import 'package:objectbox/objectbox.dart';
 import 'package:salah_x/features/recording/models/unit.dart';
 import 'package:uuid/uuid.dart';
 
@@ -140,4 +141,18 @@ class Prayer {
       masjidName: masjidName == true ? null : this.masjidName,
     );
   }
+}
+
+@Entity()
+class DataPrayer {
+  @Id()
+  int id = 0;
+  String date;
+  String data;
+
+  DataPrayer({
+    this.id = 0,
+    required this.date,
+    required this.data,
+  });
 }

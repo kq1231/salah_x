@@ -1,61 +1,66 @@
+import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:salah_x/features/recording/models/prayer.dart';
 import 'package:salah_x/features/recording/models/unit.dart';
 import 'package:salah_x/features/recording/repositories/prayer_repository_skeleton.dart';
-import 'package:salah_x/init/database_file_provider.dart';
+import 'package:salah_x/init/store_provider.dart';
+import 'package:salah_x/objectbox.g.dart';
 
-class PrayerRepository extends Notifier<void>
+class PrayerRepository extends AsyncNotifier<void>
     implements PrayerRepositorySkeleton {
+  late Store _store;
+  late Box<DataPrayer> _prayerBox;
+
   @override
-  build() {}
+  FutureOr<void> build() {
+    _store = ref.read(storeProvider).requireValue;
+    _prayerBox = _store.box<DataPrayer>();
+  }
 
   @override
   Future<Map<int, Map<int, List<int>>>> getDates() async {
-    // Read the file
-    // Extract the dates in the form {year: {month: [dates]}}
+    final query = _prayerBox.query().build();
 
-    File file = ref.read(databaseFileProvider).requireValue;
+    List<DateTime> dateTimes = query
+        .property(DataPrayer_.date)
+        .find()
+        .map((e) => DateTime.parse(e))
+        .toList();
 
-    final jsonData = await file.readAsString();
-    final content = jsonDecode(jsonData);
+    query.close();
 
-    // Initialize the result map
-    final dates =
-        <int, Map<int, List<int>>>{}; // example: {2024: {5: [29, 31, 30]}}
+// Initialize the map
+    Map<int, Map<int, List<int>>> dateMap = {};
 
-    // Loop through each date entry
-    for (var dateEntry in content.entries) {
-      final dateString = dateEntry.key; // "2024-03-12"
+    // Iterate through each DateTime object
+    for (DateTime dateTime in dateTimes) {
+      int year = dateTime.year;
+      int month = dateTime.month;
+      int day = dateTime.day;
 
-      // Extract year and month from the date string
-      final DateTime date = DateTime.parse(dateString);
-      final year = date.year;
-      final month = date.month;
-
-      // Update the result map
-      if (!dates.containsKey(year)) {
-        dates[year] = {};
+      // If the year is not already in the map, add it
+      if (!dateMap.containsKey(year)) {
+        dateMap[year] = {};
       }
 
-      if (!dates[year]!.containsKey(month)) {
-        dates[year]![month] = [];
+      // If the month is not already in the map for this year, add it
+      if (!dateMap[year]!.containsKey(month)) {
+        dateMap[year]![month] = [];
       }
 
-      dates[year]![month]!.add(date.day);
+      // Add the day to the list for this month and year
+      dateMap[year]![month]!.add(day);
     }
 
-    return dates;
+    return dateMap;
   }
 
   @override
   Future<bool> createPrayers(String date) async {
-    File file = ref.read(databaseFileProvider).requireValue;
-
     // Create default prayers with units
-    final List prayers = [
+    final List<Prayer> prayers = [
       Prayer(
         name: 'Fajr',
         units: [
@@ -168,86 +173,63 @@ class PrayerRepository extends Notifier<void>
       );
     }
 
-    final jsonData = await file.readAsString();
-    final content = jsonDecode(jsonData) as Map<String, dynamic>;
-
-    if (!content.containsKey(date)) {
-      content[date] = {};
-      content[date]["prayers"] = [];
-
-      for (Prayer prayer in prayers) {
-        content[date]["prayers"].add(prayer.toJson());
-      }
-
-      // Write JSON data to the file
-      await file.writeAsString(
-        jsonEncode(
-          content,
-        ),
-      );
-
+    final query = _prayerBox.query(DataPrayer_.date.equals(date)).build();
+    if (query.count() == 0) {
+      _prayerBox.put(DataPrayer(
+          date: date,
+          data: jsonEncode(prayers.map((prayer) => prayer.toJson()).toList())));
+      query.close();
       return true;
     }
+    query.close();
+    return false;
+  }
 
-    return false; // 'false' means that the date is already present
+  Future<DataPrayer> fetchDataPrayer(String date) async {
+    final query = _prayerBox.query(DataPrayer_.date.equals(date)).build();
+
+    DataPrayer dataPrayer = (await query.findAsync()).first;
+
+    query.close();
+
+    return dataPrayer;
   }
 
   @override
   Future<List<Prayer>> fetchPrayers(String date) async {
-    File file = ref.read(databaseFileProvider).requireValue;
-
-    // Read JSON data from the file
-    final jsonData = await file.readAsString();
-
-    // Decode JSON string to a map
-    final content = jsonDecode(jsonData) as Map<String, dynamic>;
-
+    DataPrayer dataPrayer = await fetchDataPrayer(date);
     List<Prayer> prayers = [];
-
-    // Extract prayer object for the date
-    final prayersMap = content[date]["prayers"] as List;
-
-    for (var prayerMap in prayersMap) {
-      prayers.add(Prayer.fromJson(prayerMap));
+    List prayersJson = jsonDecode(dataPrayer.data);
+    for (Map<String, dynamic> json in prayersJson) {
+      prayers.add(Prayer.fromJson(json));
     }
 
-    return prayers; // Return the prayers list
+    return prayers;
   }
 
   @override
   Future<void> updatePrayer(String date, Prayer prayer, int prayerIndex) async {
-    File file = ref.read(databaseFileProvider).requireValue;
-    // Read the file and get the data
-    final jsonData = await file.readAsString();
-    final content = jsonDecode(jsonData) as Map<String, dynamic>;
+    DataPrayer dataPrayer = await fetchDataPrayer(date);
+    List<Prayer> prayers = [];
+    List prayersJson = jsonDecode(dataPrayer.data);
+    for (Map<String, dynamic> json in prayersJson) {
+      prayers.add(Prayer.fromJson(json));
+    }
 
-    // Replace the old Prayer with the new one
-    content[date]["prayers"][prayerIndex] = prayer.toJson();
+    prayers[prayerIndex] = prayer;
 
-    // Save the data
-    file.writeAsString(jsonEncode(content));
+    _prayerBox.put(DataPrayer(
+        id: dataPrayer.id,
+        date: date,
+        data: jsonEncode(prayers.map((prayer) => prayer.toJson()).toList())));
   }
 
   @override
   Future<void> deletePrayers(String date) async {
-    File file = ref.read(databaseFileProvider).requireValue;
-
-    // Read JSON data from the file
-    final jsonData = await file.readAsString();
-
-    // Decode JSON string to a map
-    final prayersMap = jsonDecode(jsonData) as Map<String, dynamic>;
-
-    // Remove prayer data for the date
-    prayersMap.remove(date);
-
-    // Encode updated prayers map to JSON string
-    final updatedJsonData = jsonEncode(prayersMap);
-
-    // Write updated JSON data back to the file
-    await file.writeAsString(updatedJsonData);
+    final query = _prayerBox.query(DataPrayer_.date.equals(date)).build();
+    _prayerBox.remove(query.property(DataPrayer_.id).find().first);
   }
 }
 
 final prayerRepositoryProvider =
-    NotifierProvider<PrayerRepository, void>(PrayerRepository.new);
+    AsyncNotifierProvider<PrayerRepository, void>(PrayerRepository.new);

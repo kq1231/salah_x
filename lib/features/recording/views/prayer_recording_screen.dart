@@ -125,7 +125,7 @@ class _PrayerRecordingScreenState extends ConsumerState<PrayerRecordingScreen> {
           ),
         );
       },
-      error: (_, __) => const Text("Error"),
+      error: (_, __) => Text("Error $_ $__"),
       loading: () => SpinKitCircle(
         color: Theme.of(context).colorScheme.primary,
       ),

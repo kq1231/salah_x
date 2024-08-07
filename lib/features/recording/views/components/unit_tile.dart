@@ -76,7 +76,7 @@ class UnitTile extends StatelessWidget {
                                       onChanged(unit.copyWith(
                                           focusLevel: FocusLevel.high));
                                     },
-                                    icon: Icon(Icons.add),
+                                    icon: const Icon(Icons.add),
                                   ),
                                 ],
                               ),
