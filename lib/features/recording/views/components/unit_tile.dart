@@ -20,6 +20,9 @@ class UnitTile extends StatelessWidget {
           Transform.scale(
             scale: 1.2,
             child: Checkbox(
+                fillColor: unit.hasPrayed == true
+                    ? WidgetStatePropertyAll(Colors.green)
+                    : null,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(99)),
                 value: unit.hasPrayed ?? false,
@@ -34,8 +37,10 @@ class UnitTile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10)),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
-              backgroundColor: Colors.indigo,
-              collapsedBackgroundColor: Colors.indigo,
+              backgroundColor:
+                  unit.hasPrayed == true ? Colors.green[600] : Colors.indigo,
+              collapsedBackgroundColor:
+                  unit.hasPrayed == true ? Colors.green[600] : Colors.indigo,
               title: Text(unit.type.toString().split('.').last),
               leading: CircleAvatar(
                 radius: 12,

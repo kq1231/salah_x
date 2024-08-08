@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:salah_x/features/recording/providers/prayer_timings_provider.dart';
 import 'package:salah_x/features/recording/repositories/prayer_repository_impl.dart';
 import 'package:salah_x/init/store_provider.dart';
 
@@ -15,4 +16,7 @@ final startupProvider = FutureProvider<void>((ref) async {
 
   // Then create today's data if not already there
   await ref.read(prayerRepositoryProvider.notifier).createPrayers(date);
+
+  // Fetch prayer timings
+  await ref.read(prayerTimingsProvider.future);
 });

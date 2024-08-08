@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
-import 'package:salah_x/features/recording/controllers/crud_status_provider.dart';
-import 'package:salah_x/features/recording/controllers/dates_controller.dart';
-import 'package:salah_x/features/recording/controllers/prayer_controller.dart';
+import 'package:salah_x/features/recording/providers/crud_status_provider.dart';
+import 'package:salah_x/features/recording/providers/dates_controller.dart';
+import 'package:salah_x/features/recording/providers/prayer_controller.dart';
+import 'package:salah_x/features/recording/providers/prayer_timings_provider.dart';
 import 'package:salah_x/features/recording/repositories/prayer_repository_impl.dart';
 import 'package:salah_x/features/recording/views/components/prayer_section.dart';
 import 'package:salah_x/features/recording/views/dates_screen.dart';
@@ -91,6 +92,13 @@ class _PrayerRecordingScreenState extends ConsumerState<PrayerRecordingScreen> {
             itemBuilder: (context, index) {
               return PrayerSection(
                 prayer: prayers[index],
+                time: DateTime.parse(widget.date) ==
+                        DateTime(DateTime.now().year, DateTime.now().month,
+                            DateTime.now().day)
+                    ? ref.read(prayerTimingsProvider).requireValue.isNotEmpty
+                        ? ref.read(prayerTimingsProvider).requireValue[index]
+                        : null
+                    : null,
                 units: prayers[index].units,
                 onPrayerChanged: (prayer) {
                   prayers[index] = prayer;

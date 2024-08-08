@@ -5,6 +5,7 @@ import 'package:salah_x/features/recording/views/components/unit_tile.dart';
 
 class PrayerSection extends StatelessWidget {
   final Prayer prayer;
+  final TimeOfDay? time;
   final List<Unit> units;
   final void Function(int unitIndex, Unit unit) onUnitChanged;
   final void Function(Prayer prayer) onPrayerChanged;
@@ -12,6 +13,7 @@ class PrayerSection extends StatelessWidget {
   const PrayerSection({
     super.key,
     required this.prayer,
+    this.time,
     required this.units,
     required this.onUnitChanged,
     required this.onPrayerChanged,
@@ -50,6 +52,14 @@ class PrayerSection extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              leading: time != null
+                  ? Text(
+                      time!.format(context),
+                      style: const TextStyle(
+                        fontSize: 15,
+                      ),
+                    )
+                  : null,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),

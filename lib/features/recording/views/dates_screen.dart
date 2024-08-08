@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:salah_x/features/recording/controllers/crud_status_provider.dart';
-import 'package:salah_x/features/recording/controllers/dates_controller.dart';
+import 'package:salah_x/features/recording/providers/crud_status_provider.dart';
+import 'package:salah_x/features/recording/providers/dates_controller.dart';
 import 'package:salah_x/features/recording/views/prayer_recording_screen.dart';
 import 'package:salah_x/home.dart';
 

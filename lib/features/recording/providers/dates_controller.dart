@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:salah_x/features/recording/controllers/crud_status_provider.dart';
+import 'package:salah_x/features/recording/providers/crud_status_provider.dart';
 import 'package:salah_x/features/recording/repositories/prayer_repository_impl.dart';
 
 class DatesNotifier extends AsyncNotifier<Map<int, Map<int, List<int>>>> {
