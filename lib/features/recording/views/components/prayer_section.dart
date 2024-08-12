@@ -33,11 +33,13 @@ class PrayerSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(
             Radius.circular(10),
           ),
-          color: Color.fromARGB(106, 63, 81, 181),
+          color: prayer.isQadha == true
+              ? Colors.redAccent[700]
+              : const Color.fromARGB(100, 63, 81, 181),
         ),
         child: Column(
           children: [
