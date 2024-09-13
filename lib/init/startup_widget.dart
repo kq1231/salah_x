@@ -16,7 +16,7 @@ class StartupScreen extends ConsumerWidget {
         return const PrayerHomePage();
       },
       error: (e, st) {
-        return const Scaffold(body: Text("ERROR"));
+        return Scaffold(body: Text("ERROR $e $st"));
       },
       loading: () {
         return Scaffold(

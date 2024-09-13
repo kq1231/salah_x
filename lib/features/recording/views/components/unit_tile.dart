@@ -21,7 +21,7 @@ class UnitTile extends StatelessWidget {
             scale: 1.2,
             child: Checkbox(
                 fillColor: unit.hasPrayed == true
-                    ? WidgetStatePropertyAll(Colors.green)
+                    ? const WidgetStatePropertyAll(Colors.green)
                     : null,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(99)),
