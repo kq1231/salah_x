@@ -31,7 +31,8 @@ class _PrayerRecordingScreenState extends ConsumerState<PrayerRecordingScreen> {
       data: (prayers) {
         return Scaffold(
           appBar: AppBar(
-            leading: DrawerButton(
+            leading: IconButton(
+              icon: const Icon(Icons.date_range),
               onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => const DatesScreen(),
               )),
@@ -102,9 +103,6 @@ class _PrayerRecordingScreenState extends ConsumerState<PrayerRecordingScreen> {
                 units: prayers[index].units,
                 onPrayerChanged: (prayer) {
                   prayers[index] = prayer;
-
-                  // Trigger a rebuild
-                  setState(() {});
 
                   // Update the database
                   ref
