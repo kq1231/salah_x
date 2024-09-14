@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   desktop_window
+  flutter_timezone
   objectbox_flutter_libs
 )
 

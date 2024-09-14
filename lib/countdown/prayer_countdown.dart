@@ -48,16 +48,15 @@ class _PrayerCountdownState extends State<PrayerCountdown>
     // Schedule updates to the timer every second
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_timeRemaining.inSeconds <= 0) {
-        timer.cancel();
-        _controller.stop();
-        _determineCurrentPrayerTimes(); // Recalculate the next prayer when time runs out
-      } else {
         setState(() {
-          _calculateTimeRemaining();
-          _calculateProgress();
-          _controller.forward(from: 0); // Restart fade effect for seconds
+          _determineCurrentPrayerTimes(); // Recalculate the next prayer when time runs out
         });
       }
+      setState(() {
+        _calculateTimeRemaining();
+        _calculateProgress();
+        _controller.forward(from: 0); // Restart fade effect for seconds
+      });
     });
   }
 
@@ -159,6 +158,21 @@ class _PrayerCountdownState extends State<PrayerCountdown>
             ],
           ),
         ),
+        SizedBox(
+          width: 200 + 28,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(TimeOfDay.fromDateTime(_previousPrayerTime!).format(context),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w300)),
+              Text(TimeOfDay.fromDateTime(_nextPrayerTime!).format(context),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w300)),
+            ],
+          ),
+        ),
+
         const Spacer(
           flex: 2,
         ),
@@ -209,7 +223,7 @@ class SemiCirclePainter extends CustomPainter {
     final Paint backgroundPaint = Paint()
       ..color = Colors.green // Background color
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 10
+      ..strokeWidth = 13
       ..strokeCap = StrokeCap.round;
 
     // Paint for the progress arc
