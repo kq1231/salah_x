@@ -48,7 +48,7 @@ class NotificationService extends AsyncNotifier<void> {
     final List<String> messages = motivatingMessages[prayerName] ?? [];
     final message = messages.isNotEmpty
         ? messages[random.nextInt(messages.length)]
-        : "It’s time for $prayerName!";
+        : "It's time for $prayerName!";
 
     try {
       await _flutterLocalNotificationsPlugin.zonedSchedule(
