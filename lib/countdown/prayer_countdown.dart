@@ -130,6 +130,7 @@ class _PrayerCountdownState extends State<PrayerCountdown>
 
   @override
   Widget build(BuildContext context) {
+    print("BUID");
     return Column(
       children: [
         const Spacer(), // Semi-circle outline progress bar with prayer names

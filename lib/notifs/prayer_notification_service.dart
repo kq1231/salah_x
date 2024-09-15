@@ -61,6 +61,7 @@ class NotificationService extends AsyncNotifier<void> {
             'prayer_channel',
             'Prayer Notifications',
             channelDescription: 'Channel for prayer notifications',
+            styleInformation: BigTextStyleInformation(''),
           ),
           linux: LinuxNotificationDetails(),
         ),
@@ -73,46 +74,81 @@ class NotificationService extends AsyncNotifier<void> {
     }
   }
 
-  Future<void> schedulePostPrayerReminder(
+  Future<void> schedulePostPrayerReminders(
     int id,
-    DateTime prayerTime,
+    DateTime currentPrayerTime,
+    DateTime nextPrayerTime,
     String prayerName,
   ) async {
-    final reminderTime = prayerTime.add(const Duration(minutes: 30));
+    final totalDuration = nextPrayerTime.difference(currentPrayerTime);
 
-    try {
-      await _flutterLocalNotificationsPlugin.zonedSchedule(
-        id,
-        'Have you prayed $prayerName?',
-        'Don\'t forget to complete your $prayerName prayer!',
-        tz.TZDateTime.from(reminderTime, tz.local),
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-            'prayer_reminder_channel',
-            'Prayer Reminders',
-            channelDescription: 'Reminders to complete prayers',
+    // We want 3 reminders within the prayer window, so we divide the time interval by 4.
+    final intervalDuration = totalDuration ~/ 4;
+
+    final random = Random();
+    final List<String> messages = postPrayerReminderMessages[prayerName] ?? [];
+
+    for (int i = 1; i <= 3; i++) {
+      final reminderTime = currentPrayerTime.add(intervalDuration * i);
+
+      // Pick a random reminder message for each notification
+      final message = messages.isNotEmpty
+          ? messages[random.nextInt(messages.length)]
+          : "Have you prayed $prayerName? Don’t forget to complete your prayer!";
+
+      try {
+        await _flutterLocalNotificationsPlugin.zonedSchedule(
+          id + i, // Using different IDs for each notification
+          'Have you prayed $prayerName?',
+          message,
+          tz.TZDateTime.from(reminderTime, tz.local),
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'prayer_reminder_channel',
+              'Prayer Reminders',
+              channelDescription: 'Reminders to complete prayers',
+              styleInformation: BigTextStyleInformation(''),
+            ),
+            linux: LinuxNotificationDetails(),
           ),
-          linux: LinuxNotificationDetails(),
-        ),
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.wallClockTime,
-      );
-    } catch (e) {
-      print('Error scheduling post-prayer reminder for $prayerName: $e');
+          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.wallClockTime,
+        );
+      } catch (e) {
+        print(
+            'Error scheduling post-prayer reminder for $prayerName at $reminderTime: $e');
+      }
     }
   }
 
   Future<void> scheduleAllNotifications(List<DateTime> prayerTimes) async {
     const prayerNames = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
 
-    for (int i = 0; i < prayerTimes.length; i++) {
+    for (int i = 0; i < prayerTimes.length - 1; i++) {
       try {
+        // Schedule prayer notification
         await schedulePrayerNotification(i, prayerTimes[i], prayerNames[i]);
-        await schedulePostPrayerReminder(
-            i + 100, prayerTimes[i], prayerNames[i]);
+
+        // Schedule 3 post-prayer reminders between consecutive prayers
+        await schedulePostPrayerReminders(
+          i + 100,
+          prayerTimes[i],
+          prayerTimes[i + 1],
+          prayerNames[i],
+        );
       } catch (e) {
-        print('Error scheduling notifications for $prayerNames[i]: $e');
+        print('Error scheduling notifications for ${prayerNames[i]}: $e');
+      }
+    }
+  }
+
+  Future<void> cancelPostPrayerReminders(int id) async {
+    for (int i = 1; i <= 3; i++) {
+      try {
+        await _flutterLocalNotificationsPlugin.cancel(id + i);
+      } catch (e) {
+        print('Error canceling reminder notification with id ${id + i}: $e');
       }
     }
   }

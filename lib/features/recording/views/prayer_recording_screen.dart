@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:salah_x/features/recording/models/unit.dart';
 import 'package:salah_x/features/recording/providers/crud_status_provider.dart';
 import 'package:salah_x/features/recording/providers/dates_controller.dart';
 import 'package:salah_x/features/recording/providers/prayer_controller.dart';
@@ -9,6 +10,7 @@ import 'package:salah_x/features/recording/providers/prayer_timings_provider.dar
 import 'package:salah_x/features/recording/repositories/prayer_repository_impl.dart';
 import 'package:salah_x/features/recording/views/components/prayer_section.dart';
 import 'package:salah_x/features/recording/views/dates_screen.dart';
+import 'package:salah_x/notifs/prayer_notification_service.dart';
 
 class PrayerRecordingScreen extends ConsumerStatefulWidget {
   final String date;
@@ -114,6 +116,14 @@ class _PrayerRecordingScreenState extends ConsumerState<PrayerRecordingScreen> {
                 onUnitChanged: (unitIndex, unit) {
                   // Change the status
                   prayers[index].units[unitIndex] = unit;
+
+                  // Check if the "Fardh" unit is marked as completed
+                  if (unit.type == UnitType.fardh && unit.hasPrayed == true) {
+                    // Cancel the post-prayer notification for this prayer
+                    ref
+                        .read(notificationServiceProvider.notifier)
+                        .cancelPostPrayerReminders(index + 100);
+                  }
 
                   // Trigger a rebuild
                   setState(() {});

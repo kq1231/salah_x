@@ -11,9 +11,11 @@ class PrayerHomePage extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.date_range),
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const DatesScreen(),
-            )),
+            onPressed: () => Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => const DatesScreen(),
+                ),
+                (Route<dynamic> route) => false),
           ),
           title: const Text("Prayer Countdown"),
         ),

@@ -30,3 +30,36 @@ final Map<String, List<String>> motivatingMessages = {
     "Reflect on your blessings and end your day with Isha prayer!"
   ],
 };
+
+final Map<String, List<String>> postPrayerReminderMessages = {
+  'Fajr': [
+    "Have you prayed Fajr yet? The day starts better with Fajr.",
+    "Don't miss Fajr! Start your day with peace and purpose.",
+    "It’s time to complete your Fajr prayer, the best start to your day!",
+    "Have you prayed Fajr? The morning light awaits your prayer."
+  ],
+  'Dhuhr': [
+    "Dhuhr time has passed. Take a moment to offer your prayer.",
+    "Did you pray Dhuhr yet? The midday is a blessing with Dhuhr.",
+    "Don't forget Dhuhr! Pause your day to recharge spiritually.",
+    "Complete your Dhuhr prayer and feel the peace of midday worship."
+  ],
+  'Asr': [
+    "Have you prayed Asr? Asr prayer brings strength in the afternoon.",
+    "It’s time for Asr! Take a short break to reconnect with Allah.",
+    "Complete your Asr prayer for success in both worlds.",
+    "The Asr prayer strengthens your spirit. Have you prayed yet?"
+  ],
+  'Maghrib': [
+    "Maghrib time has come to an end. Offer your prayer and reflect on the day.",
+    "Have you prayed Maghrib? The beauty of the evening awaits your supplication.",
+    "End your day with Maghrib prayer, a moment of peace after sunset.",
+    "Don’t miss Maghrib! The evening prayer brings blessings to your night."
+  ],
+  'Isha': [
+    "Have you prayed Isha? The night is restful after the final prayer.",
+    "Don't forget to offer Isha before the night ends.",
+    "End your day with peace and tranquility—pray Isha now.",
+    "Have you completed your Isha prayer? Sleep comes easier with Isha."
+  ]
+};
