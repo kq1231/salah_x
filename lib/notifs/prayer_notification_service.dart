@@ -132,7 +132,7 @@ class NotificationService extends AsyncNotifier<void> {
 
         // Schedule 3 post-prayer reminders between consecutive prayers
         await schedulePostPrayerReminders(
-          i + 100,
+          i * 100,
           prayerTimes[i],
           prayerTimes[i + 1],
           prayerNames[i],
