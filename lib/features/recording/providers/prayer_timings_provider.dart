@@ -13,7 +13,7 @@ final prayerTimingsProvider = FutureProvider<List<TimeOfDay>>((ref) async {
     final response = await http.get(url);
     if (response.statusCode == 200) {
       Map json = jsonDecode(response.body);
-      for (String prayer in "Fajr,Dhuhr,Asr,Maghrib,Isha".split(",")) {
+      for (String prayer in "Fajr,Sunrise,Dhuhr,Asr,Maghrib,Isha".split(",")) {
         List time = json["data"]["timings"][prayer]
             .split(":")
             .map((e) => int.parse(e))
@@ -24,7 +24,6 @@ final prayerTimingsProvider = FutureProvider<List<TimeOfDay>>((ref) async {
     }
   } catch (e) {
     return [
-      
       // for (int _ in Iterable.generate(5)) const TimeOfDay(hour: 0, minute: 0)
     ];
   }

@@ -25,6 +25,14 @@ class PrayerRecordingScreen extends ConsumerStatefulWidget {
 }
 
 class _PrayerRecordingScreenState extends ConsumerState<PrayerRecordingScreen> {
+  late List<TimeOfDay> prayerTimings;
+
+  @override
+  void initState() {
+    prayerTimings = ref.read(prayerTimingsProvider).requireValue..removeAt(1);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final providerOfPrayers = ref.watch(prayersProvider(widget.date));
@@ -98,8 +106,8 @@ class _PrayerRecordingScreenState extends ConsumerState<PrayerRecordingScreen> {
                 time: DateTime.parse(widget.date) ==
                         DateTime(DateTime.now().year, DateTime.now().month,
                             DateTime.now().day)
-                    ? ref.read(prayerTimingsProvider).requireValue.isNotEmpty
-                        ? ref.read(prayerTimingsProvider).requireValue[index]
+                    ? prayerTimings.isNotEmpty
+                        ? prayerTimings[index]
                         : null
                     : null,
                 units: prayers[index].units,

@@ -29,7 +29,7 @@ class _PrayerCountdownState extends State<PrayerCountdown>
   String? _nextPrayerName;
   late Timer _timer;
 
-  List<String> prayerNames = "Fajr.Dhuhr.Asr.Maghrib.Isha".split(".");
+  List<String> prayerNames = "Fajr.Sunrise.Dhuhr.Asr.Maghrib.Isha".split(".");
 
   @override
   void initState() {
