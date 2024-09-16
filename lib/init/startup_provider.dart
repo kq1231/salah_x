@@ -26,5 +26,5 @@ final startupProvider = FutureProvider<void>((ref) async {
           .read(prayerTimingsProvider)
           .requireValue
           .map((e) => DateTime.now().copyWith(hour: e.hour, minute: e.minute))
-          .toList());
+          .toList()..removeAt(1));
 });
